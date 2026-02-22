@@ -7,7 +7,7 @@ import domain.Priority
 @Bean
 class TaskService {
     fn createTask(title: string, description: string, priority: Priority, dueDate: long?) -> Task {
-        require(title.length > 0, "标题不能为空")
+        require(title != "", "标题不能为空")
         return Task(title, description, TaskStatus.PENDING, priority, dueDate)
     }
     

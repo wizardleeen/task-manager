@@ -33,7 +33,7 @@ class Task(
     }
     
     fn updateTitle(newTitle: string) {
-        require(newTitle.length > 0, "标题不能为空")
+        require(newTitle != "", "标题不能为空")
         title = newTitle
         updatedAt = now()
     }
