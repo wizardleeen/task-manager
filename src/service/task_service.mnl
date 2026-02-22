@@ -1,0 +1,80 @@
+package service
+
+import domain.Task
+import domain.TaskStatus
+import domain.Priority
+
+@Bean
+class TaskService {
+    fn createTask(title: string, description: string, priority: Priority, dueDate: long?) -> Task {
+        require(title.length > 0, "标题不能为空")
+        return Task(title, description, TaskStatus.PENDING, priority, dueDate)
+    }
+    
+    fn getAllTasks() -> Task[] {
+        return Task.statusIdx.query(
+            TaskStatus.PENDING,
+            TaskStatus.CANCELLED
+        )
+    }
+    
+    fn getTasksByStatus(status: TaskStatus) -> Task[] {
+        return Task.statusIdx.getAll(status)
+    }
+    
+    fn getTasksByPriority(priority: Priority) -> Task[] {
+        return Task.priorityIdx.getAll(priority)
+    }
+    
+    fn getPendingTasks() -> Task[] {
+        return Task.statusIdx.getAll(TaskStatus.PENDING)
+    }
+    
+    fn getInProgressTasks() -> Task[] {
+        return Task.statusIdx.getAll(TaskStatus.IN_PROGRESS)
+    }
+    
+    fn getCompletedTasks() -> Task[] {
+        return Task.statusIdx.getAll(TaskStatus.COMPLETED)
+    }
+    
+    fn startTask(task: Task) {
+        task.markInProgress()
+    }
+    
+    fn completeTask(task: Task) {
+        task.complete()
+    }
+    
+    fn cancelTask(task: Task) {
+        task.cancel()
+    }
+    
+    fn deleteTask(task: Task) {
+        delete task
+    }
+    
+    fn updateTaskTitle(task: Task, newTitle: string) {
+        task.updateTitle(newTitle)
+    }
+    
+    fn updateTaskDescription(task: Task, newDesc: string) {
+        task.updateDescription(newDesc)
+    }
+    
+    fn updateTaskPriority(task: Task, priority: Priority) {
+        task.updatePriority(priority)
+    }
+    
+    fn setTaskDueDate(task: Task, dueDate: long?) {
+        task.setDueDate(dueDate)
+    }
+    
+    fn getTaskCount() -> int {
+        return Task.statusIdx.query(TaskStatus.PENDING, TaskStatus.CANCELLED).length
+    }
+    
+    fn getTaskCountByStatus(status: TaskStatus) -> int {
+        return Task.statusIdx.getAll(status).length
+    }
+}

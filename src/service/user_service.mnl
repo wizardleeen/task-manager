@@ -1,0 +1,30 @@
+package service
+
+import domain.User
+import domain.Session
+import value.LoginResult
+
+@Bean
+class UserService {
+    fn login(email: string, password: string) -> LoginResult {
+        val user = User.emailIdx.getFirst(email)
+        if (user != null && user!!.checkPassword(password)) {
+            val session = Session(user!!)
+            return LoginResult(true, session.token)
+        } else
+            return LoginResult(false, null)
+    }
+
+    fn register(name: string, email: string, password: string) -> LoginResult {
+        val existing = User.emailIdx.getFirst(email)
+        require(existing == null, "邮箱已被注册")
+        
+        val user = User(name, email, password)
+        var session = Session(user)
+        return LoginResult(true, session.token)
+    }
+    
+    fn getUserByEmail(email: string) -> User? {
+        return User.emailIdx.getFirst(email)
+    }
+}

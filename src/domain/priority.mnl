@@ -1,0 +1,8 @@
+package domain
+
+enum Priority {
+    LOW,
+    MEDIUM,
+    HIGH
+;
+}

@@ -1,0 +1,15 @@
+package domain
+
+class User(
+    @Summary
+    var name: string,
+    val email: string,
+    password: string
+) {
+    priv var passwordHash = secureHash(password, null)
+    static val emailIdx = Index<string, User>(true, u -> u.email)
+
+    fn checkPassword(password: string) -> bool {
+        return passwordHash == secureHash(password, null)
+    }
+}

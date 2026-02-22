@@ -1,0 +1,17 @@
+import domain.User
+import domain.Task
+import domain.TaskStatus
+import domain.Priority
+
+@Bean
+class Init {
+    {
+        // 创建默认用户
+        User("Admin", "admin@example.com", "password123")
+        
+        // 创建示例任务
+        Task("欢迎使用任务管理系统", "这是一个示例任务，您可以开始创建自己的任务了", TaskStatus.PENDING, Priority.MEDIUM, now() + 7l * 24 * 60 * 60 * 1000)
+        Task("学习 Manul 编程", "了解 Manul 语言的基本语法和特性", TaskStatus.IN_PROGRESS, Priority.HIGH, now() + 14l * 24 * 60 * 60 * 1000)
+        Task("完成项目计划", "规划下一个项目的目标和里程碑", TaskStatus.COMPLETED, Priority.MEDIUM, null)
+    }
+}

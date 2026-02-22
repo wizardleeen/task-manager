@@ -1,0 +1,8 @@
+package value
+
+import domain.User
+
+value class LoginResult(
+    val successful: bool,
+    val token: string?
+)
